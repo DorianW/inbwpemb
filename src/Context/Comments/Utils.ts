@@ -19,7 +19,25 @@ export const addCommentByParentId = (root: CommentType, targetId: CommentType['i
 		}
 	}
 
-	// not found, return default input of root
+	// not found
+	return false;
+}
+
+export const deleteCommentById = (root: CommentType, targetId: CommentType['id']): boolean => {
+	// parent of the target id found
+	if (root.comments.some(comment => comment.id === targetId)) {
+		root.comments = root.comments.filter(comment => comment.id !== targetId);
+		return true;
+	}
+
+	// recursive search for target
+	for (let childComment of root.comments) {
+		if (deleteCommentById(childComment, targetId)) {
+			return true;
+		}
+	}
+
+	// not found
 	return false;
 }
 

@@ -1,4 +1,4 @@
-import {deepClone, addCommentByParentId} from "./Utils";
+import {deepClone, addCommentByParentId, deleteCommentById} from "./Utils";
 import CommentType from "../../Types/CommentType";
 
 describe("deepClone", () => {
@@ -65,5 +65,75 @@ describe("addCommentByParentId", () => {
 		expect(state.comments[0].comments[0].comments).toHaveLength(2);
 		expect(state.comments[0].comments[0].comments[0].id).toBe("1337");
 		expect(state.comments[0].comments[0].comments[1].id).toBe("999");
+	});
+});
+
+describe("deleteCommentById", () => {
+	it("should not delete comment if not found", () => {
+		// Arrange
+		const state: CommentType = {
+			id: "123",
+			body: 'Test body',
+			comments: [
+				{
+					id: "345", body: 'Test body 2', comments: []
+				}
+			]
+		};
+		// Act
+		deleteCommentById(state, "unknown ID");
+
+		// Assert
+		expect(state.comments).toHaveLength(1);
+	});
+
+	it("should delete comment if found", () => {
+		// Arrange
+		const state: CommentType = {
+			id: "123",
+			body: 'Test body',
+			comments: [
+				{
+					id: "345", body: 'Test body 2', comments: []
+				}
+			]
+		};
+
+		// Act
+		deleteCommentById(state, "345");
+
+		// Assert
+		expect(state.comments).toHaveLength(0);
+	});
+
+	it("should delete comment if id found in nested comment", () => {
+		// Arrange
+		const state: CommentType = {
+			id: "123",
+			body: 'Test body',
+			comments: [
+				{
+					id: "345", body: 'Test body 2', comments: [
+						{
+							id: "678", body: 'Test body 3', comments: [
+								{
+									id: "999", body: "Test body 4", comments: []
+								},
+								{
+									id: "1337", body: 'Test body 3', comments: []
+								}
+							]
+						}
+					]
+				}
+			]
+		};
+
+		// Act
+		deleteCommentById(state, "999");
+
+		// Assert
+		expect(state.comments[0].comments[0].comments).toHaveLength(1);
+		expect(state.comments[0].comments[0].comments[0].id).toBe("1337");
 	});
 });
