@@ -25,7 +25,9 @@ export const CommentsReducer = (state: CommentType, action: Actions) => {
 			// there is a simple random string helper for creating IDs, general done by the API
 			const newComment: CommentType = {id: Math.random().toString(36), body: action.payload.body, comments: []};
 			// dirty deepClone used to prevent unwanted effects
-			return {...addCommentByParentId(deepClone(state), action.payload.parentId, newComment)};
+			const updatedState = deepClone(state);
+			addCommentByParentId(updatedState, action.payload.parentId, newComment);
+			return updatedState;
 		default:
 			return state;
 	}
