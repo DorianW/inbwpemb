@@ -5,8 +5,9 @@ import {CommentsProvider} from "./Context/CommentsProvider";
 
 function App() {
 	return (
-		<main>
+		<main className="p-4">
 			<CommentsProvider>
+				<h1 className="text-2xl font-extrabold">React comments demonstration</h1>
 				<CommentsView/>
 			</CommentsProvider>
 		</main>
