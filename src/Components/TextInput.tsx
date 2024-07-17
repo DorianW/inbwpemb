@@ -5,7 +5,7 @@ type Props = {
 }
 
 const TextInput = ({onSubmit}: Props) => {
-	const [text, setText] = useState<string>("");
+	const [text, setText] = useState<string>('');
 	const onClick = () => {
 		onSubmit(text);
 		setText('');
@@ -13,7 +13,7 @@ const TextInput = ({onSubmit}: Props) => {
 	return (
 		<div>
 			<textarea value={text} onChange={(event) => setText(() => event.target.value)}></textarea>
-			<button onClick={onClick}>
+			<button onClick={onClick} disabled={!text}>
 				Add comment
 			</button>
 		</div>
