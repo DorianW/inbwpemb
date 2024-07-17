@@ -1,15 +1,14 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import './App.css';
-import Postings from "./Views/Postings";
-import {PostingsContext} from "./Context/Context";
-
+import Comments from "./Views/Comments";
+import {CommentsProvider} from "./Context/CommentsProvider";
 
 function App() {
 	return (
 		<main>
-			<PostingsContext.Provider value={useContext(PostingsContext)}>
-				<Postings />
-			</PostingsContext.Provider>
+			<CommentsProvider>
+				<Comments/>
+			</CommentsProvider>
 		</main>
 	);
 }
