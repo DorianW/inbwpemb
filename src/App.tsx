@@ -1,13 +1,13 @@
 import React from 'react';
 import './App.css';
-import Comments from "./Views/Comments";
+import CommentsView from "./Views/CommentsView";
 import {CommentsProvider} from "./Context/CommentsProvider";
 
 function App() {
 	return (
 		<main>
 			<CommentsProvider>
-				<Comments/>
+				<CommentsView/>
 			</CommentsProvider>
 		</main>
 	);

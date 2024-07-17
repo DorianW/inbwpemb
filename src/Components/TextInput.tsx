@@ -11,12 +11,19 @@ const TextInput = ({onSubmit}: Props) => {
 		setText('');
 	}
 	return (
-		<div>
-			<textarea value={text} onChange={(event) => setText(() => event.target.value)}></textarea>
-			<button onClick={onClick} disabled={!text}>
+		<form className="flex flex-col justify-start w-1/2">
+			<textarea
+				className="p-4 rounded my-2"
+				value={text} onChange={(event) => setText(() => event.target.value)}
+				placeholder="Your comment..."
+			/>
+			<button className={`text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-small rounded-lg text-sm px-4 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 w-1/3 ${!text ? 'cursor-not-allowed opacity-50' : ''}`}
+			        onClick={onClick}
+			        disabled={!text}
+			>
 				Add comment
 			</button>
-		</div>
+		</form>
 	);
 }
 
