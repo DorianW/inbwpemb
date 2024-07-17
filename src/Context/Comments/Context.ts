@@ -1,6 +1,6 @@
 import React, {createContext, useContext} from 'react';
 import CommentType from "../../Types/CommentType";
-import {initCommentsState} from "./InitState";
+import {getInitialState, saveState} from "./InitState";
 import {addCommentByParentId, deepClone} from "./Utils";
 
 export type AddAction = {
@@ -15,7 +15,7 @@ export type AddAction = {
 type Actions = AddAction;
 
 export const CommentsContext = createContext<{ state: CommentType; dispatch: React.Dispatch<Actions> }>({
-	state: initCommentsState,
+	state: getInitialState(),
 	dispatch: () => null
 });
 
@@ -27,6 +27,7 @@ export const CommentsReducer = (state: CommentType, action: Actions) => {
 			// dirty deepClone used to prevent unwanted effects
 			const updatedState = deepClone(state);
 			addCommentByParentId(updatedState, action.payload.parentId, newComment);
+			saveState(updatedState);
 			return updatedState;
 		default:
 			return state;
