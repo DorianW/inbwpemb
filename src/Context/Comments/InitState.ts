@@ -3,7 +3,7 @@ import CommentType from "../../Types/CommentType";
 const LOCAL_STATE_NAME = "react-comments-local-state";
 
 const initCommentsState: CommentType = {
-	id: 'eduegdue',
+	id: Math.random().toString(36),
 	body: 'Content of the root posting',
 	comments: []
 }
