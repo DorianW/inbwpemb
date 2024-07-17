@@ -1,7 +1,7 @@
 import React, {createContext, useContext} from 'react';
 import CommentType from "../../Types/CommentType";
 import {getInitialState, saveState} from "./InitState";
-import {addCommentByParentId, deepClone} from "./Utils";
+import {addCommentByParentId, deepClone, deleteCommentById} from "./Utils";
 
 export type AddAction = {
 	type: 'ADD';
@@ -11,8 +11,14 @@ export type AddAction = {
 	}
 }
 
-// add here more specific actions if needed, like DeleteAction... type Actions = AddAction | DeleteAction
-type Actions = AddAction;
+export type DeleteAction = {
+	type: 'DELETE';
+	payload: {
+		id: CommentType['id'],
+	}
+}
+
+type Actions = AddAction | DeleteAction;
 
 export const CommentsContext = createContext<{ state: CommentType; dispatch: React.Dispatch<Actions> }>({
 	state: getInitialState(),
@@ -20,15 +26,18 @@ export const CommentsContext = createContext<{ state: CommentType; dispatch: Rea
 });
 
 export const CommentsReducer = (state: CommentType, action: Actions) => {
+	const clonedState = deepClone(state);
 	switch (action.type) {
 		case 'ADD':
 			// there is a simple random string helper for creating IDs, general done by the API
 			const newComment: CommentType = {id: Math.random().toString(36), body: action.payload.body, comments: []};
-			// dirty deepClone used to prevent unwanted effects
-			const updatedState = deepClone(state);
-			addCommentByParentId(updatedState, action.payload.parentId, newComment);
-			saveState(updatedState);
-			return updatedState;
+			addCommentByParentId(clonedState, action.payload.parentId, newComment);
+			saveState(clonedState);
+			return clonedState;
+		case 'DELETE':
+			deleteCommentById(clonedState, action.payload.id);
+			saveState(clonedState);
+			return clonedState;
 		default:
 			return state;
 	}

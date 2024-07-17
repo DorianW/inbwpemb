@@ -2,7 +2,7 @@ import {useCommentsContext} from "../Context/Comments/Context";
 import TextInput from "./TextInput";
 import CommentType from "../Types/CommentType";
 import React, {useState} from "react";
-import {ChatBubbleLeftRightIcon, XCircleIcon} from '@heroicons/react/24/solid'
+import {ChatBubbleLeftRightIcon, XCircleIcon, TrashIcon} from '@heroicons/react/24/solid'
 
 const Comment = React.memo(({id, body, comments}: CommentType) => {
 	const {dispatch} = useCommentsContext();
@@ -11,6 +11,12 @@ const Comment = React.memo(({id, body, comments}: CommentType) => {
 	const onSubmitComment = (parentId: string, body: string) => {
 		dispatch({type: "ADD", payload: {parentId, body}});
 		onToggleInput();
+	}
+
+	const onDeleteComment = () => {
+		if (window.confirm('Do you really want to delete this comment?')) {
+			dispatch({type: "DELETE", payload: {id}});
+		}
 	}
 
 	const onToggleInput = () => {
@@ -27,10 +33,19 @@ const Comment = React.memo(({id, body, comments}: CommentType) => {
 					<button
 						className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-2 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center me-2"
 						type="button"
-						onClick={onToggleInput}>
+						onClick={onToggleInput}
+					>
 						{!inputOpened && (<ChatBubbleLeftRightIcon className="size-4 text-white"/>)}
 						{inputOpened && (<XCircleIcon className="size-4 text-white"/>)}
 						<span className="sr-only">Toggle input</span>
+					</button>
+					<button
+						className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-2 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center me-2"
+						type="button"
+						onClick={onDeleteComment}
+					>
+						<TrashIcon className="size-4 text-white"/>
+						<span className="sr-only">Delete comment</span>
 					</button>
 				</div>
 				<div className="py-4">
