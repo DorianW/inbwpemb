@@ -18,14 +18,14 @@ const Comment = React.memo(({id, body, comments}: CommentType) => {
 	}
 
 	return (
-		<section className="flex p-4">
+		<section className="flex py-4">
 			<div className="flex-col grow bg-slate-300 p-2 rounded-xl border border-gray-200">
 				<div>
 					<span className="block text-base py-4">{body}</span>
 				</div>
 				<div>
 					<button
-						className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-2 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center me-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+						className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-2 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center me-2"
 						type="button"
 						onClick={onToggleInput}>
 						{!inputOpened && (<ChatBubbleLeftRightIcon className="size-4 text-white"/>)}
