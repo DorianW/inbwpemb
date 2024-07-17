@@ -2,7 +2,7 @@ import {useCommentsContext} from "../Context/Comments/Context";
 import TextInput from "./TextInput";
 import CommentType from "../Types/CommentType";
 import React, {useState} from "react";
-import { ChatBubbleLeftRightIcon, XCircleIcon } from '@heroicons/react/24/solid'
+import {ChatBubbleLeftRightIcon, XCircleIcon} from '@heroicons/react/24/solid'
 
 const Comment = React.memo(({id, body, comments}: CommentType) => {
 	const {dispatch} = useCommentsContext();
@@ -10,6 +10,7 @@ const Comment = React.memo(({id, body, comments}: CommentType) => {
 
 	const onSubmitComment = (parentId: string, body: string) => {
 		dispatch({type: "ADD", payload: {parentId, body}});
+		onToggleInput();
 	}
 
 	const onToggleInput = () => {
@@ -24,11 +25,11 @@ const Comment = React.memo(({id, body, comments}: CommentType) => {
 				</div>
 				<div>
 					<button
+						className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-2 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center me-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
 						type="button"
-						onClick={onToggleInput}
-						className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-2 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center me-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-						{!inputOpened && (<ChatBubbleLeftRightIcon className="size-4 text-white" />)}
-						{inputOpened && (<XCircleIcon className="size-4 text-white" />)}
+						onClick={onToggleInput}>
+						{!inputOpened && (<ChatBubbleLeftRightIcon className="size-4 text-white"/>)}
+						{inputOpened && (<XCircleIcon className="size-4 text-white"/>)}
 						<span className="sr-only">Toggle input</span>
 					</button>
 				</div>
