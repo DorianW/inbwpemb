@@ -2,7 +2,7 @@ import {useContext} from "react";
 import Comment from "../Components/Comment";
 import {CommentsContext} from "../Context/Comments/Context";
 
-const Comments = () => {
+const CommentsView = () => {
 	// TODO load state from local memory
 	const {state: comments} = useContext(CommentsContext);
 
@@ -11,4 +11,4 @@ const Comments = () => {
 	);
 }
 
-export default Comments;
+export default CommentsView;
