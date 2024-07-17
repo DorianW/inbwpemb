@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import CommentsView from "./Views/CommentsView";
-import {CommentsProvider} from "./Context/CommentsProvider";
+import {CommentsProvider} from "./Context/Comments/CommentsProvider";
 
 function App() {
 	return (

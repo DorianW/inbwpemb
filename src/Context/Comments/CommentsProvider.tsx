@@ -1,6 +1,6 @@
 import {ReactNode, useReducer} from "react";
-import {CommentsReducer, CommentsContext} from "./Comments/Context";
-import {getInitialState} from "./Comments/InitState";
+import {CommentsReducer, CommentsContext} from "./Context";
+import {getInitialState} from "./InitState";
 
 export const CommentsProvider = ({children}: { children: ReactNode }) => {
 	const [state, dispatch] = useReducer(CommentsReducer, getInitialState());
