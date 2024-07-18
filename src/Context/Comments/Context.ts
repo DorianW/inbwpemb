@@ -36,15 +36,20 @@ export const CommentsReducer = (state: CommentType[], action: Actions): CommentT
 	let clonedState = deepClone(state);
 	switch (action.type) {
 		case "CREATE":
-			return [...clonedState, {
+			clonedState = [...clonedState, {
 				id: Math.random().toString(36),
 				body: action.payload.body,
 				comments: []
-			}] as CommentType[];
+			}];
+			saveState(clonedState);
+			return clonedState;
 		case 'ADD':
 			// there is a simple random string helper for creating IDs, general done by the API
-			const newComment: CommentType = {id: Math.random().toString(36), body: action.payload.body, comments: []};
-			clonedState = addCommentByParentId(clonedState, action.payload.parentId, newComment);
+			clonedState = addCommentByParentId(clonedState, action.payload.parentId, {
+				id: Math.random().toString(36),
+				body: action.payload.body,
+				comments: []
+			});
 			saveState(clonedState);
 			return clonedState;
 		case 'DELETE':
