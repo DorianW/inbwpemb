@@ -5,39 +5,25 @@ export const deepClone = <T>(obj: T): T => {
 	return JSON.parse(JSON.stringify(obj)) as T;
 };
 
-export const addCommentByParentId = (root: CommentType, targetId: CommentType['id'], newComment: CommentType): boolean => {
-	// target id found
-	if (root.id === targetId) {
-		root.comments = [newComment, ...root.comments];
-		return true;
-	}
-
-	// recursive search for target
-	for (let childComment of root.comments) {
-		if (addCommentByParentId(childComment, targetId, newComment)) {
-			return true;
+export const addCommentByParentId = (root: CommentType[], targetId: CommentType['id'], newComment: CommentType): CommentType[] => {
+	return root.map((comment: CommentType) => {
+		if (comment.id === targetId) {
+			comment.comments = [newComment, ...comment.comments];
+			return comment;
 		}
-	}
-
-	// not found
-	return false;
+		comment.comments = addCommentByParentId(comment.comments, targetId, newComment);
+		return comment;
+	});
 }
 
-export const deleteCommentById = (root: CommentType, targetId: CommentType['id']): boolean => {
-	// parent of the target id found
-	if (root.comments.some(comment => comment.id === targetId)) {
-		root.comments = root.comments.filter(comment => comment.id !== targetId);
-		return true;
-	}
+export const deleteCommentById = (root: CommentType[], targetId: CommentType['id']): CommentType[] => {
+	return root.filter((comment: CommentType) => {
+		if (comment.id === targetId) return false;
 
-	// recursive search for target
-	for (let childComment of root.comments) {
-		if (deleteCommentById(childComment, targetId)) {
-			return true;
+		if (comment.comments.length > 0) {
+			comment.comments = deleteCommentById(comment.comments, targetId);
 		}
-	}
+		return true;
+	})
 
-	// not found
-	return false;
 }
-
