@@ -2,27 +2,21 @@ import CommentType from "../../Types/CommentType";
 
 const LOCAL_STATE_NAME = "react-comments-local-state";
 
-const initCommentsState: CommentType = {
-	id: Math.random().toString(36),
-	body: 'Content of the root posting',
-	comments: []
-}
-
-export const getInitialState = (): CommentType => {
+export const getInitialState = (): CommentType[] => {
 	const stateInMemory = localStorage.getItem(LOCAL_STATE_NAME);
 
 	if (stateInMemory === null) {
-		return initCommentsState;
+		return [];
 	} else {
 		try {
-			return JSON.parse(stateInMemory) as CommentType;
+			return JSON.parse(stateInMemory) as CommentType[];
 		} catch (error: unknown) {
 			console.error(error);
-			return initCommentsState;
+			return [];
 		}
 	}
 };
 
-export const saveState = (state: CommentType) => {
+export const saveState = (state: CommentType[]) => {
 	localStorage.setItem(LOCAL_STATE_NAME, JSON.stringify(state));
 };
