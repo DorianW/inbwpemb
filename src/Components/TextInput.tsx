@@ -2,9 +2,11 @@ import {useState} from "react";
 
 type Props = {
 	onSubmit: (text: string) => void;
+	placeholder?: string;
+	buttonText?: string;
 }
 
-const TextInput = ({onSubmit}: Props) => {
+const TextInput = ({onSubmit, placeholder = 'Your comment...', buttonText = 'Submit comment'}: Props) => {
 	const [text, setText] = useState<string>('');
 	const onClick = () => {
 		onSubmit(text);
@@ -15,13 +17,14 @@ const TextInput = ({onSubmit}: Props) => {
 			<textarea
 				className="p-4 rounded my-2"
 				value={text} onChange={(event) => setText(() => event.target.value)}
-				placeholder="Your comment..."
+				placeholder={placeholder}
 			/>
-			<button className={`text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-small rounded-lg text-sm px-4 py-2.5 me-2 mb-2 focus:outline-none w-full sm:w-1/2 ${!text ? 'cursor-not-allowed opacity-50' : ''}`}
-			        onClick={onClick}
-			        disabled={!text}
+			<button
+				className={`text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-small rounded-lg text-sm px-4 py-2.5 me-2 mb-2 focus:outline-none w-full sm:w-1/2 ${!text ? 'cursor-not-allowed opacity-50' : ''}`}
+				onClick={onClick}
+				disabled={!text}
 			>
-				Add comment
+				{buttonText}
 			</button>
 		</form>
 	);
