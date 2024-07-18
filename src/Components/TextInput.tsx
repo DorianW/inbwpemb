@@ -15,7 +15,7 @@ const TextInput = ({onSubmit, placeholder = 'Your comment...', buttonText = 'Sub
 	return (
 		<form className="flex flex-col justify-start w-full sm:w-6/12">
 			<textarea
-				className="p-4 rounded my-2"
+				className="p-4 rounded my-2 border-2"
 				value={text} onChange={(event) => setText(() => event.target.value)}
 				placeholder={placeholder}
 			/>
