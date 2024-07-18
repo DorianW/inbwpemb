@@ -13,7 +13,12 @@ const CommentsView = () => {
 	return (
 		<>
 			{state.length === 0 && (
-				<TextInput onSubmit={(text) => onCreatePost(text)}/>
+				<>
+					<div>There are 0 posts for now. Be the first one and add a new post!</div>
+					<TextInput onSubmit={(text) => onCreatePost(text)}
+					           placeholder="Add the first post"
+					           buttonText="Submit post"/>
+				</>
 			)}
 			{state.length > 0 && state.map(comment => (<Comment key={comment.id} {...comment}/>))}
 		</>
