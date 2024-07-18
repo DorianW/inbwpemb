@@ -3,6 +3,7 @@
 This PoC demonstrates how a simple commenting system can be implemented in React.
 The following function are implemented:
 
+- Create first comment / post, if non are existing
 - Create (prepend) a comment for exising comment(s); nesting is allowed
 - Delete any comment and, if needed, also sub-comments of the node
 - Persist state in `localStorage`
@@ -39,8 +40,6 @@ with `TailwindCSS` was limited.
 
 Here is a short list of possible improvements:
 
-- For simplicity a default comment / post is initialized in the state, a function to create the first comment / post
-  should be implemented
 - Implement more standalone components like icon buttons to reduce the redundancy
 - Add more tests for components, reducers etc.
 - Improve UI/UX by adding more attributes on the `CommentType` like `created_date`, `likes` or sorting by created date
